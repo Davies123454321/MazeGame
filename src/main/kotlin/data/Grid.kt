@@ -45,7 +45,7 @@ class Grid(
         ).filter { isWalkable(it.first, it.second) }
     }
 
-    fun shortestPath(
+    fun shortestDFSPath(
         x1: Int,
         y1: Int,
         x2: Int,
@@ -57,8 +57,18 @@ class Grid(
         }
 
         val neighbours = getNeighbours(x1, y1).filter { !travalled.contains(it) }
-        val shortestPaths = neighbours.map { shortestPath(it.first, it.second, x2, y2, travalled.plus(x1 to y1)) }
-        val shortestPath = shortestPaths.minByOrNull { it.size } ?: emptyList()
+        val shortestPaths =
+            neighbours
+                .map {
+                    shortestDFSPath(
+                        it.first,
+                        it.second,
+                        x2,
+                        y2,
+                        travalled.plus(x1 to y1),
+                    )
+                }.filter { it.isNotEmpty() }
+        val shortestPath = shortestPaths.minByOrNull { it.size } ?: return emptyList()
         return listOf(x1 to y1) + shortestPath
     }
 }

@@ -38,8 +38,7 @@ class MovementSystem {
         val grid = gameState.grid
         val enemy = gameState.enemy
         val player = gameState.player
-        val shortestPath = grid.shortestPath(enemy.x, enemy.y, player.x, player.y, emptySet())
-        println(shortestPath)
+        val shortestPath = grid.shortestDFSPath(enemy.x, enemy.y, player.x, player.y, emptySet())
         return shortestPath.get(1)
     }
 
